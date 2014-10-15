@@ -20,7 +20,7 @@ else
 
     if [ ! -d "${dir}" ]; then
         mkdir "${dir}"
-	fi
+    fi
 
     for((i=1; i<=$parts; i++)) do
         newPath="${dir}/${base}-part$i${ext}"
