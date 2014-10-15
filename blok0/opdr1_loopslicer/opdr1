@@ -1,0 +1,32 @@
+#! /bin/bash
+
+if [ $# != 3 ]; then
+    echo "functie: knipt een stukje audio in het opgegeven aantal delen"
+    echo "syntax: ./opdr1 PATH 8 .wav"
+    echo "de nieuwe bestanden komen in PATH/output_loopslicer te staan"
+else
+    echo "file path:" $1
+    echo "slices:" $2
+
+    path=$1
+    parts=$2
+    ext=$3
+
+    dir=`dirname "${path}"`/output_loopslicer
+    base=`basename "${path}" ${ext}`
+
+    samples=`soxi -s "${path}"`
+    partSamples=$(($samples / $parts))
+
+    if [ ! -d "${dir}" ]; then
+        mkdir "${dir}"
+	fi
+
+    for((i=1; i<=$parts; i++)) do
+        newPath="${dir}/${base}-part$i${ext}"
+        begin=$(($(($i - 1)) * $partSamples))
+        end=$(($i * $partSamples))
+        sox "${path}" "${newPath}" trim $begin"s" =$end"s"
+    done
+    echo "heeft $parts ${ext} bestanden in ${dir} geplaatst"
+fi
