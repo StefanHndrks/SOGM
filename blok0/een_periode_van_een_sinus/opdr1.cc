@@ -1,3 +1,6 @@
+//delete naar regel 81 verschoven om memory leak te fixen
+//delete stont na return, wat nergen op slaat
+
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
@@ -10,7 +13,6 @@ float* sinewave(int tableSize) {
 		temp[i] = sin((i * M_PI * 2) / tableSize);
 	}
 	return temp;
-	delete[] temp;
 }
 
 float* squarewave(int tableSize) {
@@ -19,7 +21,6 @@ float* squarewave(int tableSize) {
 		temp[i] = 0 <= sin((i * M_PI * 2) / tableSize) ? 1 : -1;
 	}
 	return temp;
-	delete[] temp;
 }
 
 float* trianglewave(int tableSize) {
@@ -39,7 +40,6 @@ float* sawtoothwave(int tableSize) {
 		temp[i] = (i / (tableSize * 0.5)) - 1;
 	}
 	return temp;
-	delete[] temp;
 }
 
 int main(int argc, char *argv[]) {
@@ -78,6 +78,7 @@ int main(int argc, char *argv[]) {
 			cout << "sine, square, triangle, sawtooth" << endl;
 			cout << "alleen de eerste 3 letters zijn nodig" << endl;
 		}
+		delete[] output;
 	}
 	return 0;
 }
