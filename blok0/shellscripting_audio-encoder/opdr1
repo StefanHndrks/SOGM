@@ -3,12 +3,13 @@
 if [ $# != 2 ]; then
     echo "functie: cenverteert een audiobestand naar een ander type"
     echo "syntax: ./opdr1 wav mp3"
-    echo "kan wav en aiff naar mp3, flac of converteren"
+    echo "kan wav en aiff naar mp3 of flac converteren"
 else
     oldExt=$1
     newExt=$2
 
-    if ([ $oldExt == "wav" ] || [ $oldExt == "aiff" ]); then
+    if ([ $oldExt == "wav" ] || [ $oldExt == "aiff" ]) &
+       ([ $newExt == "mp3" ] || [ $newExt == "flac" ]); then
 
         path="`pwd`/new_${newExt}_files"
 
@@ -21,15 +22,13 @@ else
             if [ ! -d "${path}" ]; then
                 mkdir "${path}"
             fi
-            for file in *$oldExt; do
+            for file in *".$oldExt"; do
                 echo "bezig met: ${file}"
                 newFile="`basename "${file}" .$oldExt`"
                 if [ $newExt == "mp3" ]; then
-                    lame -V2 "${file}" "${path}/${newFile}.flac"
+                    lame -V2 "${file}" "${path}/${newFile}.mp3"
                 elif [ $newExt == "flac" ]; then
-                    echo "supergafe naar flac converter ${file} ${path}/${newFile}.mp3"
-                else
-                    echo "kan alleen wav of aiff files naar map3 of flac converteren"
+                    echo "supergafe naar flac converter ${file} ${path}/${newFile}.flac"
                 fi
             done
             echo "klaar met converteren, nieuwe files geplaats in:"
