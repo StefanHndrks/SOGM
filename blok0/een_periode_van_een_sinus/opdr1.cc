@@ -3,8 +3,8 @@
 //probeerde die ook te vullen via iterator, maar kwam er al snel achter dat in dit geval niet kon.
 //daarna via new zoals eerst
 
-//functies aangepast zodat ze een freq willen, en samplerate is nu optioneel
-//ook geeft de square functie nu geen pulse meer
+//functies aangepast zodat ze een freq willen, en samplerate is nu optioneel.
+//ook geeft de square functie nu geen pulse meer.
 
 #include <iostream>
 #include <math.h>
