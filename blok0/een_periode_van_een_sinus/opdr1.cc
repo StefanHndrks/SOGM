@@ -7,7 +7,10 @@
 
 using namespace std;
 
-float* sinewave(int tableSize) {
+static int SAMPLERATE = 48000
+
+float* sinewave(int freq) {
+	int tableSize = rate / freq;
 	float *temp = new float[tableSize];
 	for (int i = 0; i < tableSize; i++) {
 		temp[i] = sin((i * M_PI * 2) / tableSize);
@@ -31,7 +34,6 @@ float* trianglewave(int tableSize) {
 		temp[i] = iMod < (tableSize / 2) ? incr - 1 : 3 - incr;
 	}
 	return temp;
-	delete[] temp;
 }
 
 float* sawtoothwave(int tableSize) {
@@ -43,15 +45,18 @@ float* sawtoothwave(int tableSize) {
 }
 
 int main(int argc, char *argv[]) {
-	if (argc != 4) {
-		cout << "functie: plot de uitgekozen geluidsgolf" << endl;
-		cout << "syntax: ./opdr1 sine 440 48000" << endl;
-		cout << "geef een golfvorm, frequentie en dan een samplerate" << endl;
+	if (argc != (3 || 4)) {
+		cout << "function: plot the chosen soundwave" << endl;
+		cout << "syntax: ./opdr1 sine 440" << endl;
+		cout << "        ./opdr1 saw 1240 24000" << endl;
+		cout << "give a soundwave name, frequentie and a optinal samplerate" << endl;
 	} else {
 		float freq = atof(argv[2]);
-		float rate = atof(argv[3]);
 		int tableSize = rate / freq;
-		float *output;
+		float* output;
+		if (argc == 4) {
+			SAMPLERATE = atoi(argv[3]);
+		}
 
 		if (strncmp(argv[1], "sin", 3) == 0) {
 			output = sinewave(tableSize);
@@ -74,9 +79,9 @@ int main(int argc, char *argv[]) {
 				cout << output[i] << endl;
 			}
 		} else {
-			cout << "beschikbare golfen:" << endl;
+			cout << "avelible waves:" << endl;
 			cout << "sine, square, triangle, sawtooth" << endl;
-			cout << "alleen de eerste 3 letters zijn nodig" << endl;
+			cout << "only the first 3 letters are needed" << endl;
 		}
 		delete[] output;
 	}
