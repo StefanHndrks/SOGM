@@ -8,7 +8,7 @@ else
     oldExt=$1
     newExt=$2
 
-    if ([ $oldExt == "wav" ] || [ $oldExt == "aiff" ]) &
+    if ([ $oldExt == "wav" ] || [ $oldExt == "aiff" ]) &&
        ([ $newExt == "mp3" ] || [ $newExt == "flac" ]); then
 
         path="`pwd`/new_${newExt}_files"
